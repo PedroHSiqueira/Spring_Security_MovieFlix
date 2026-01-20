@@ -1,5 +1,7 @@
 package com.movieflix.controller;
 
+import com.movieflix.controller.request.CategoryRequest;
+import com.movieflix.controller.response.CategoryResponse;
 import com.movieflix.entity.Category;
 import com.movieflix.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +20,17 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getAllCategories(){
+    public List<CategoryResponse> getAllCategories(){
         return categoryService.findAll();
     }
 
     @PostMapping
-    public Category saveCategory(@RequestBody Category category){
+    public Category saveCategory(@RequestBody CategoryRequest request){
         return categoryService.save(category);
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id){
+    public CategoryResponse getCategoryById(@PathVariable Long id){
         Optional<Category> category = categoryService.getById(id);
         return category.orElse(null);
     }

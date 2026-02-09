@@ -5,6 +5,8 @@ import com.movieflix.controller.response.CategoryResponse;
 import com.movieflix.entity.Category;
 import com.movieflix.mapper.CategoryMapper;
 import com.movieflix.service.CategoryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,31 +23,30 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<CategoryResponse> getAllCategories(){
-        List<Category> categories = categoryService.findAll();
-        return categories.stream()
+    public ResponseEntity<List<CategoryResponse>> getAllCategories(){
+        return ResponseEntity.ok(categoryService.findAll()
+                .stream()
                 .map(category -> CategoryMapper.toCategoryResponse(category))
-                .toList();
+                .toList());
     }
 
     @PostMapping
-    public CategoryResponse saveCategory(@RequestBody CategoryRequest request){
+    public ResponseEntity<CategoryResponse> saveCategory(@RequestBody CategoryRequest request){
          Category category = CategoryMapper.toCategory(request);
         Category savedCategory = categoryService.save(category);
-        return CategoryMapper.toCategoryResponse(savedCategory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(CategoryMapper.toCategoryResponse(savedCategory));
     }
 
     @GetMapping("/{id}")
-    public CategoryResponse getCategoryById(@PathVariable Long id){
-        Optional<Category> category = categoryService.getById(id);
-        if (category.isPresent()) {
-            return CategoryMapper.toCategoryResponse(category.get());
-        }
-        return null;
+    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
+        return categoryService.getById(id).map(category -> ResponseEntity.ok(CategoryMapper.toCategoryResponse(category)))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategoryById(@PathVariable Long id){
+    public ResponseEntity<Void> deleteCategoryById(@PathVariable Long id){
         categoryService.deleteById(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

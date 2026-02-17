@@ -1,5 +1,6 @@
 package com.movieflix.entity;
 
+import com.fasterxml.classmate.AnnotationOverrides;
 import jakarta.persistence.*;
 import lombok.*;
 

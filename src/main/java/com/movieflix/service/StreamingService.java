@@ -24,7 +24,7 @@ public class StreamingService {
         return streamingRepository.save(streaming);
     }
 
-    public Optional<Streaming> getById(Long id) {
+    public Optional<Streaming> findById(Long id) {
         return streamingRepository.findById(id);
     }
 

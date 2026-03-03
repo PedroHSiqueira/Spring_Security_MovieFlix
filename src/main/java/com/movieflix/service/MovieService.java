@@ -79,4 +79,12 @@ public class MovieService {
         }
         return streamingsFound;
     }
+
+    public List<Movie> findByCategory(Long categoryId){
+        return movieRepository.findMovieByCategory(List.of(Category.builder().id(categoryId).build()));
+    }
+
+    public void delete(Long id){
+        movieRepository.deleteById(id);
+    }
 }

@@ -81,7 +81,7 @@ public class MovieService {
     }
 
     public List<Movie> findByCategory(Long categoryId){
-        return movieRepository.findMovieByCategory(List.of(Category.builder().id(categoryId).build()));
+        return movieRepository.findMovieBycategory(List.of(Category.builder().id(categoryId).build()));
     }
 
     public void delete(Long id){

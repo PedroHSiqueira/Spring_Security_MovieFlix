@@ -24,8 +24,8 @@ public class SecurityConfig {
                 .csrf(csfr -> csfr.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "movieflix/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "movieflix/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/movieflix/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/movieflix/auth/login").permitAll()
                         .anyRequest().authenticated())
 //                .addFilter()
                 .build();
